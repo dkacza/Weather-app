@@ -1,0 +1,15 @@
+// variables
+// Color variables
+$primary1: #5D989C;
+$primary2: #6CB1B4;
+$primary3: #92D8DC;
+$secondary1: #F0F0F0;
+$secondary2: #203436;
+
+// mixins
+@mixin centerAbsolute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
