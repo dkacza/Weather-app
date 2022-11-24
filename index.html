@@ -10,9 +10,64 @@
     </head>
     <body>
         <div class="container">
-            <section class="search"></section>
-            <main class="current"></main>
-            <section class="forecast"></section>
+            <section class="search">
+                <input type="text" placeholder="search for different city" />
+                <div class="buttons-container">
+                    <button class="search-btn"></button>
+                    <div class="divider"></div>
+                    <button class="geolocate-btn"></button>
+                </div>
+            </section>
+
+            <main class="current">
+                <div class="city-info">Pierściec, Poland</div>
+                <div class="weather-data-container">
+                
+                    <div class="main-data-container">
+                        <div class="temperature">11 °C</div>
+                        <div class="conditions">rain</div>
+                        <div class="unit-toggle">
+                            <button class="celcius">°C</button>
+                            <div class="divider"></div>
+                            <button class="fahrenheit">°F</button>
+                        </div>
+                    </div>
+
+                    <div class="additional-data-container">
+                        <div class="rain-chance">
+                            <div class="icon rain"></div>
+                            <div class="data rain"></div>
+                        </div>
+                        <div class="wind-speed">
+                            <div class="icon wind"></div>
+                            <div class="data wind"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+
+            <section class="forecast">
+                <div class="divisor">
+                    <div class="forecast-text">forecast</div>
+                    <div class="dividing-line"></div>
+                    <div class="toggle-forecast-upper"></div>
+                </div>
+
+                <div class="tiles">
+                    <div class="tile">
+                        <div class="hour">12:00</div>
+                        <div class="weatherType">
+                            <div class="background">
+                                <div class="icon"></div>
+                            </div>
+                        </div>
+                        <div class="rain-chance">14%</div>
+                    </div>
+                </div>
+
+                <div class="toggle-forecast-lower"></div>
+            </section>
         </div>
     </body>
 </html>

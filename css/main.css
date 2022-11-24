@@ -16,6 +16,17 @@ div.container {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+}
+div.container section.search {
+  flex-basis: 150px;
+}
+div.container main.current {
+  flex-grow: 1;
+}
+div.container section.forecast {
+  flex-basis: 180px;
 }
 
 @media (min-width: 900px) {
