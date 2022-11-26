@@ -11,39 +11,37 @@
     <body>
         <div class="container">
             <section class="search">
-                <input type="text" placeholder="search for different city" />
+                <input type="text" placeholder="search" class="searchbar" />
                 <div class="buttons-container">
-                    <button class="search-btn"></button>
+                    <button class="search-btn">Search</button>
                     <div class="divider"></div>
-                    <button class="geolocate-btn"></button>
+                    <button class="geolocate-btn">Geolocate</button>
                 </div>
             </section>
 
             <main class="current">
                 <div class="city-info">Pierściec, Poland</div>
                 <div class="weather-data-container">
-                
                     <div class="main-data-container">
                         <div class="temperature">11 °C</div>
                         <div class="conditions">rain</div>
                         <div class="unit-toggle">
-                            <button class="celcius">°C</button>
+                            <button class="celcius-btn">°C</button>
                             <div class="divider"></div>
-                            <button class="fahrenheit">°F</button>
+                            <button class="fahrenheit-btn">°F</button>
                         </div>
                     </div>
 
                     <div class="additional-data-container">
                         <div class="rain-chance">
-                            <div class="icon rain"></div>
-                            <div class="data rain"></div>
+                            <div class="icon rain">Rain chance</div>
+                            <div class="data rain">DATA RAIN</div>
                         </div>
                         <div class="wind-speed">
-                            <div class="icon wind"></div>
-                            <div class="data wind"></div>
+                            <div class="icon wind">Wind Speed</div>
+                            <div class="data wind">DATA WIND</div>
                         </div>
                     </div>
-
                 </div>
             </main>
 
@@ -51,11 +49,15 @@
                 <div class="divisor">
                     <div class="forecast-text">forecast</div>
                     <div class="dividing-line"></div>
-                    <div class="toggle-forecast-upper"></div>
+                    <div class="toggle-forecast upper">
+                        <button class="hourly-btn">Hourly</button>
+                        <div class="divider"></div>
+                        <button class="daily-btn">Daily</button>
+                    </div>
                 </div>
 
                 <div class="tiles">
-                    <div class="tile">
+                    <!-- <div class="tile">
                         <div class="hour">12:00</div>
                         <div class="weatherType">
                             <div class="background">
@@ -63,10 +65,14 @@
                             </div>
                         </div>
                         <div class="rain-chance">14%</div>
-                    </div>
+                    </div> -->
                 </div>
 
-                <div class="toggle-forecast-lower"></div>
+                <div class="toggle-forecast lower">
+                    <button class="hourly-btn">Hourly</button>
+                    <div class="divider"></div>
+                    <button class="daily-btn">Daily</button>
+                </div>
             </section>
         </div>
     </body>

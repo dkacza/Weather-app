@@ -12,6 +12,7 @@ div.container {
   width: 100vw;
   height: 100vh;
   max-width: 1080px;
+  overflow: hidden;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -20,7 +21,9 @@ div.container {
   flex-direction: column;
 }
 div.container section.search {
-  flex-basis: 150px;
+  flex-basis: 100px;
+  display: flex;
+  flex-direction: row;
 }
 div.container main.current {
   flex-grow: 1;
@@ -32,6 +35,9 @@ div.container section.forecast {
 @media (min-width: 900px) {
   div.container {
     max-height: 670px;
+  }
+  div.container section.search {
+    max-width: 80%;
   }
 }
 @media (min-width: 1200px) {
