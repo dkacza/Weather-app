@@ -1,67 +1,108 @@
 'use-strict';
 
-// Reverse geocoding
-// http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid={API key}
-
-// Current weather
-// https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
-
-// Forecast
-// https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
+const API_KEY = 'b48fc9a3f6a6deaf3d65d0d6620f1a13';
 
 class WeatherData {
-    constructor(main, desc, id, icon, temp, hum, wind, pres, clouds) {
+    constructor(
+        main,
+        desc,
+        id,
+        icon,
+        temp,
+        hum,
+        wind,
+        pres,
+        clouds,
+        time = new Date()
+    ) {
         this.main = main;
         this.description = desc;
         this.weatherId = id;
         this.iconId = icon;
 
         this.temp = {
-            celcius: temp - 273.15,
-            fahrenheit: (9 / 5) * (temp - 273.15) + 32,
+            celcius: Math.round(temp - 273.15),
+            fahrenheit: Math.round((9 / 5) * (temp - 273.15) + 32),
         };
         (this.humidity = hum),
             (this.windSpeed = wind),
             (this.pressure = pres),
             (this.cloudsPercentage = clouds);
+
+        this.time = time;
+        this.hour = time.getHours();
+    }
+}
+class Location {
+    constructor(lat, lon, city, country) {
+        this.lat = lat;
+        this.lon = lon;
+        this.city = city;
+        this.country = country;
     }
 }
 
-const geolocate = function () {
+const geolocation = function () {
     return new Promise((res, rej) => {
         navigator.geolocation.getCurrentPosition(res, rej);
     });
 };
+const getCurrentLocation = async function () {
+    try {
+        const geoResponse = await geolocation();
+        if (!geoResponse) throw new Error('Geolocation disabled');
+        const {latitude, longitude} = geoResponse.coords;
 
-const prepareURL = async function (requestType) {
-    const location = await geolocate();
-    const {latitude: lat, longitude: lon} = location.coords;
-    const weatherKey = 'b48fc9a3f6a6deaf3d65d0d6620f1a13';
-
-    switch (requestType) {
-        case 'reverseGeo':
-            return `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${weatherKey}`;
-        case 'current':
-            return `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherKey}`;
-        case 'forecast':
-            return `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherKey}`;
-        default:
-            throw new Error('Wrong request type');
+        const url = `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${API_KEY}`;
+        const response = await fetch(url).then(res => {
+            if (!res.ok)
+                throw new Error(
+                    `Getting current location error - ${res.status}`
+                );
+            return res.json();
+        });
+        return new Location(
+            response[0].lat,
+            response[0].lon,
+            response[0].name,
+            response[0].country
+        );
+    } catch (err) {
+        throw err;
+    }
+};
+const getLocationFromQuery = async function (searchQuerry) {
+    try {
+        const url = `http://api.openweathermap.org/geo/1.0/direct?q=${searchQuerry}&limit=1&appid=${API_KEY}`;
+        const response = await fetch(url).then(res => {
+            if (!res.ok)
+                throw new Error(
+                    `Getting location from user querry error - ${res.status}`
+                );
+            return res.json();
+        });
+        if (response.length === 0) throw new Error('Invalid search querry');
+        return new Location(
+            response[0].lat,
+            response[0].lon,
+            response[0].name,
+            response[0].country
+        );
+    } catch (err) {
+        throw err;
     }
 };
 
-const getCity = async function () {
-    const url = await prepareURL('reverseGeo');
-    const [response] = await fetch(url).then(res => res.json());
-
-    const resultString = `${response.name}, ${response.country}`;
-    return resultString;
-};
-
-const getCurrentWeather = async function () {
+const getCurrentWeather = async function (location) {
     try {
-        const url = await prepareURL('current');
-        const response = await fetch(url).then(res => res.json());
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${API_KEY}`;
+        const response = await fetch(url).then(res => {
+            if (!res.ok)
+                throw new Error(
+                    `Getting current weather error - ${res.status}`
+                );
+            return res.json();
+        });
 
         const currentWeather = new WeatherData(
             response.weather[0].main,
@@ -76,8 +117,80 @@ const getCurrentWeather = async function () {
         );
         return currentWeather;
     } catch (err) {
-        throw new Error(err);
+        throw err;
     }
 };
 
-getCurrentWeather().then(response => console.log(response)).catch(err => console.error(err));
+const dom = {
+    // Search section inputs.
+    cityInput: document.querySelector('input.searchbar'),
+    searchBtn: document.querySelector('button.search-btn'),
+    geolocateBtn: document.querySelector('button.geolocate-btn'),
+
+    // Current weather section
+    place: document.querySelector('div.city-info'),
+    temperature: document.querySelector('div.temperature'),
+    conditions: document.querySelector('div.conditions'),
+
+    celcius: document.querySelector('button.celcius-btn'),
+    fahrenheit: document.querySelector('button.fahrenheit-btn'),
+
+    humidity: document.querySelector('div.data.humidity'),
+    wind: document.querySelector('div.data.wind'),
+
+    forecastTogglesH: document.querySelectorAll('button.hourly-btn'),
+    forecastTogglesD: document.querySelectorAll('button.daily-btn'),
+
+    celciusSelected: true,
+
+    updateLocation: function (newLocation) {
+        this.place.textContent = `${newLocation.city}, ${newLocation.country}`;
+    },
+    updateWeather: function (curWeather) {
+        this.temperature.textContent = this.celciusSelected
+            ? `${curWeather.temp.celcius} °C`
+            : `${curWeather.temp.fahrenheit} °F`;
+        this.conditions.textContent = curWeather.main;
+        this.humidity.textContent = `${curWeather.humidity} %`;
+        this.wind.textContent = `${curWeather.windSpeed} m/s`;
+    },
+};
+
+let curWeather;
+
+dom.geolocateBtn.addEventListener('click', async function (e) {
+    try {
+        e.preventDefault();
+        const location = await getCurrentLocation();
+        dom.updateLocation(location);
+
+        curWeather = await getCurrentWeather(location);
+        dom.updateWeather(curWeather);
+    } catch (err) {
+        console.error(err);
+    }
+});
+dom.searchBtn.addEventListener('click', async function (e) {
+    try {
+        e.preventDefault();
+        const locationQuerry = dom.cityInput.value;
+        if (!locationQuerry) return;
+        const location = await getLocationFromQuery(locationQuerry);
+        dom.updateLocation(location);
+
+        curWeather = await getCurrentWeather(location);
+        dom.updateWeather(curWeather);
+    } catch (err) {
+        console.error(err);
+    }
+});
+dom.celcius.addEventListener('click', e => {
+    e.preventDefault();
+    dom.celciusSelected = true;
+    dom.updateWeather(curWeather);
+});
+dom.fahrenheit.addEventListener('click', e => {
+    e.preventDefault();
+    dom.celciusSelected = false;
+    dom.updateWeather(curWeather);
+})
