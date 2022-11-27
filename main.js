@@ -101,6 +101,7 @@ const getCurrentWeather = async function (location) {
                 throw new Error(
                     `Getting current weather error - ${res.status}`
                 );
+            console.log('response arrived')
             return res.json();
         });
 
@@ -158,9 +159,8 @@ const dom = {
 
 let curWeather;
 
-dom.geolocateBtn.addEventListener('click', async function (e) {
+const handleGeo = async function() {
     try {
-        e.preventDefault();
         const location = await getCurrentLocation();
         dom.updateLocation(location);
 
@@ -169,10 +169,9 @@ dom.geolocateBtn.addEventListener('click', async function (e) {
     } catch (err) {
         console.error(err);
     }
-});
-dom.searchBtn.addEventListener('click', async function (e) {
+}
+const handleQuerry = async function() {
     try {
-        e.preventDefault();
         const locationQuerry = dom.cityInput.value;
         if (!locationQuerry) return;
         const location = await getLocationFromQuery(locationQuerry);
@@ -180,17 +179,21 @@ dom.searchBtn.addEventListener('click', async function (e) {
 
         curWeather = await getCurrentWeather(location);
         dom.updateWeather(curWeather);
+        dom.cityInput.value = '';
     } catch (err) {
         console.error(err);
     }
-});
-dom.celcius.addEventListener('click', e => {
-    e.preventDefault();
+}
+
+dom.geolocateBtn.addEventListener('click', handleGeo);
+dom.searchBtn.addEventListener('click', handleQuerry);
+dom.celcius.addEventListener('click', () => {
     dom.celciusSelected = true;
     dom.updateWeather(curWeather);
 });
-dom.fahrenheit.addEventListener('click', e => {
-    e.preventDefault();
+dom.fahrenheit.addEventListener('click', () => {
     dom.celciusSelected = false;
     dom.updateWeather(curWeather);
 })
+
+handleGeo();
