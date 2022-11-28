@@ -4,18 +4,33 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- Google ICons -->
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+
         <link rel="stylesheet" href="css/main.css" />
         <script defer src="main.js"></script>
         <title>Weather</title>
     </head>
     <body>
-        <div class="container loading">
+        <div class="container">
             <section class="search">
-                <input type="text" placeholder="search" class="searchbar" />
+                <div class="input-wrapper error">
+                    <input type="text" placeholder="search" class="searchbar" />
+                </div>
                 <div class="buttons-container">
-                    <button class="search-btn">Search</button>
+                    <button class="search-btn">
+                        <span class="material-symbols-outlined"> search </span>
+                    </button>
                     <div class="divider"></div>
-                    <button class="geolocate-btn">Geolocate</button>
+                    <button class="geolocate-btn">
+                        <span class="material-symbols-outlined">
+                            location_on
+                        </span>
+                    </button>
                 </div>
             </section>
 

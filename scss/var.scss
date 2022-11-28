@@ -1,15 +1,47 @@
-// variables
+// Font
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
 // Color variables
-$primary1: #5D989C;
-$primary2: #6CB1B4;
-$primary3: #92D8DC;
-$secondary1: #F0F0F0;
+$primary1: #5d989c;
+$primary2: #6cb1b4;
+$primary3: #92d8dc;
+$secondary1: #f0f0f0;
 $secondary2: #203436;
 
-// mixins
+// Mixins
 @mixin centerAbsolute {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+@mixin defaultButton {
+    background: none;
+    outline: none;
+    border: 3px solid $secondary1;
+    transition: 0.2s;
+    &:hover {
+        background-color: $secondary1;
+        span {
+            color: $primary2;
+        }
+    }
+}
+
+// Style reset
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    color: $secondary1;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+}
+
+// Google Icons inital styling
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 48;
+    color: $secondary1;
 }
