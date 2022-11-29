@@ -28,6 +28,7 @@ main.current div.weather-data-container div.main-data-container {
 main.current div.weather-data-container div.main-data-container div.temperature {
   font-size: 4rem;
   height: 4rem;
+  width: 11rem;
 }
 main.current div.weather-data-container div.main-data-container div.conditions {
   height: 2rem;
@@ -39,7 +40,7 @@ main.current div.weather-data-container div.main-data-container div.unit-toggle 
   width: 4rem;
   justify-content: space-between;
   margin-top: 0.5rem;
-  margin-left: 1.75rem;
+  margin-left: 1rem;
 }
 main.current div.weather-data-container div.main-data-container div.unit-toggle button {
   background: none;
@@ -105,6 +106,7 @@ main.current div.weather-data-container div.additional-data-container div span {
   main.current div.weather-data-container div.main-data-container div.temperature {
     font-size: 6rem;
     height: 6rem;
+    width: 16rem;
   }
   main.current div.weather-data-container div.main-data-container div.conditions {
     margin-top: 0.5rem;

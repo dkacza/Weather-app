@@ -143,6 +143,7 @@ main.current div.weather-data-container div.main-data-container {
 main.current div.weather-data-container div.main-data-container div.temperature {
   font-size: 4rem;
   height: 4rem;
+  width: 11rem;
 }
 main.current div.weather-data-container div.main-data-container div.conditions {
   height: 2rem;
@@ -154,7 +155,7 @@ main.current div.weather-data-container div.main-data-container div.unit-toggle 
   width: 4rem;
   justify-content: space-between;
   margin-top: 0.5rem;
-  margin-left: 1.75rem;
+  margin-left: 1rem;
 }
 main.current div.weather-data-container div.main-data-container div.unit-toggle button {
   background: none;
@@ -220,6 +221,7 @@ main.current div.weather-data-container div.additional-data-container div span {
   main.current div.weather-data-container div.main-data-container div.temperature {
     font-size: 6rem;
     height: 6rem;
+    width: 16rem;
   }
   main.current div.weather-data-container div.main-data-container div.conditions {
     margin-top: 0.5rem;
@@ -273,6 +275,9 @@ div.container section.forecast {
 div.container div.spinner {
   display: none;
 }
+div.container div.msg {
+  display: none;
+}
 
 @media (min-width: 900px) {
   html {
@@ -294,7 +299,8 @@ div.container.loading {
   transition: none;
 }
 div.container.loading main.current,
-div.container.loading section.forecast {
+div.container.loading section.forecast,
+div.container.loading div.msg {
   opacity: 0;
   transition: none;
 }
@@ -329,4 +335,19 @@ div.container.loading div.spinner {
   100% {
     transform: translate(-50%, -50%) rotate(360deg);
   }
+}
+div.container.disp-msg {
+  transition: none;
+}
+div.container.disp-msg main.current,
+div.container.disp-msg section.forecast,
+div.container.disp-msg div.spinner {
+  display: none;
+}
+div.container.disp-msg div.msg {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

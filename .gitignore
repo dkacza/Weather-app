@@ -2,3 +2,4 @@ design/
 node_modules/
 .prettierrc
 apiKey.txt
+todo.md

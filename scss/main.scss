@@ -1,7 +1,6 @@
 @import 'var.scss';
-@import 'search.scss'; 
+@import 'search.scss';
 @import 'current.scss';
-
 
 body {
     width: 100vw;
@@ -40,6 +39,9 @@ div.container {
     div.spinner {
         display: none;
     }
+    div.msg {
+        display: none;
+    }
 }
 
 // Media Queries
@@ -60,15 +62,15 @@ div.container {
     }
 }
 
-// Loading
+// Loading spinner
 div.container.loading {
     transition: none;
     main.current,
-    section.forecast {
+    section.forecast,
+    div.msg {
         opacity: 0;
         transition: none;
     }
-
     div.spinner {
         @include centerAbsolute;
         display: block;
@@ -86,5 +88,18 @@ div.container.loading {
     }
     100% {
         transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+// User message
+div.container.disp-msg {
+    transition: none;
+    main.current,
+    section.forecast,
+    div.spinner {
+        display: none;
+    }
+    div.msg {
+        display: block;
+        @include centerAbsolute;
     }
 }
