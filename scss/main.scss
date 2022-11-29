@@ -1,5 +1,6 @@
 @import 'var.scss';
-@import 'search.scss';
+@import 'search.scss'; 
+@import 'current.scss';
 
 
 body {
@@ -16,6 +17,7 @@ div.container {
     height: 100%;
     max-width: 1080px;
     overflow: hidden;
+    padding: 1rem 2rem;
 
     display: flex;
     flex-direction: column;

@@ -1,0 +1,135 @@
+@import 'var.scss';
+
+main.current {
+    div.city-info {
+        font-size: 1.5rem;
+        margin-bottom: 2.5rem;
+    }
+    div.weather-data-container {
+        div.main-data-container {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 2rem;
+
+            div.temperature {
+                font-size: 4rem;
+                height: 4rem;
+            }
+            div.conditions {
+                height: 2rem;
+                font-size: 2rem;
+            }
+            div.unit-toggle {
+                display: flex;
+                flex-direction: row;
+                width: 4rem;
+                justify-content: space-between;
+                margin-top: 0.5rem;
+                margin-left: 1.75rem;
+
+                button {
+                    background: none;
+                    border: none;
+                    color: $primary3;
+                    font-size: 1.25rem;
+
+                    &.active {
+                        font-weight: bold;
+                        color: $secondary1;
+                    }
+                }
+                div.divider {
+                    width: 2px;
+                    height: 1.25rem;
+                    background-color: $secondary1;
+                }
+            }
+        }
+        div.additional-data-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            div {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                font-size: 1.5rem;
+
+                span {
+                    font-size: 1.5rem;
+                    margin-right: 0.5rem;
+                }
+            }
+        }
+    }
+}
+
+// Media
+// Additional data moves to the right
+@media (min-width: 560px) {
+    main.current {
+        div.weather-data-container {
+            display: flex;
+            flex-direction: row;
+
+            div.additional-data-container {
+                margin-left: 4rem;
+                flex-direction: column;
+                justify-content: flex-start;
+
+                div.humidity {
+                    margin-top: 0.5rem;
+                }
+                div.wind-speed {
+                    margin-top: 1rem;
+                }
+            }
+        }
+    }
+}
+// Bigger fonts
+@media (min-width: 800px) {
+    main.current {
+        div.city-info {
+            font-size: 1.5rem;
+        }
+        div.temperature {
+            font-size: 5rem;
+        }
+    }
+}
+
+// Temperature toggle moves to the bottom, bigger fonts
+@media (min-width: 1200px) {
+    main.current {
+        div.city-info {
+            font-size: 2rem;
+            margin-bottom: 1.75rem;
+        }
+        div.weather-data-container div.main-data-container {
+            div.temperature {
+                font-size: 6rem;
+                height: 6rem;
+            }
+            div.conditions {
+                margin-top: 0.5rem;
+                font-size: 2.25rem;
+                height: 2.25rem;
+            }
+            div.col2 {
+                align-self: flex-end;
+                margin: 0;
+                transform: translate(-100%);
+
+                div.unit-toggle {
+                    margin: 0;
+
+                    button {
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+        }
+    }
+}

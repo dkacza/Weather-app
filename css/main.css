@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -35,7 +36,6 @@ html {
 }
 
 section.search {
-  padding: 1rem 2rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -114,6 +114,130 @@ section.search div.buttons-container div.divider {
     font-size: 1.75rem;
   }
 }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  color: #f0f0f0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 700, "GRAD" 0, "opsz" 48;
+  color: #f0f0f0;
+}
+
+main.current div.city-info {
+  font-size: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+main.current div.weather-data-container div.main-data-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2rem;
+}
+main.current div.weather-data-container div.main-data-container div.temperature {
+  font-size: 4rem;
+  height: 4rem;
+}
+main.current div.weather-data-container div.main-data-container div.conditions {
+  height: 2rem;
+  font-size: 2rem;
+}
+main.current div.weather-data-container div.main-data-container div.unit-toggle {
+  display: flex;
+  flex-direction: row;
+  width: 4rem;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  margin-left: 1.75rem;
+}
+main.current div.weather-data-container div.main-data-container div.unit-toggle button {
+  background: none;
+  border: none;
+  color: #92d8dc;
+  font-size: 1.25rem;
+}
+main.current div.weather-data-container div.main-data-container div.unit-toggle button.active {
+  font-weight: bold;
+  color: #f0f0f0;
+}
+main.current div.weather-data-container div.main-data-container div.unit-toggle div.divider {
+  width: 2px;
+  height: 1.25rem;
+  background-color: #f0f0f0;
+}
+main.current div.weather-data-container div.additional-data-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+main.current div.weather-data-container div.additional-data-container div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.5rem;
+}
+main.current div.weather-data-container div.additional-data-container div span {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+@media (min-width: 560px) {
+  main.current div.weather-data-container {
+    display: flex;
+    flex-direction: row;
+  }
+  main.current div.weather-data-container div.additional-data-container {
+    margin-left: 4rem;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  main.current div.weather-data-container div.additional-data-container div.humidity {
+    margin-top: 0.5rem;
+  }
+  main.current div.weather-data-container div.additional-data-container div.wind-speed {
+    margin-top: 1rem;
+  }
+}
+@media (min-width: 800px) {
+  main.current div.city-info {
+    font-size: 1.5rem;
+  }
+  main.current div.temperature {
+    font-size: 5rem;
+  }
+}
+@media (min-width: 1200px) {
+  main.current div.city-info {
+    font-size: 2rem;
+    margin-bottom: 1.75rem;
+  }
+  main.current div.weather-data-container div.main-data-container div.temperature {
+    font-size: 6rem;
+    height: 6rem;
+  }
+  main.current div.weather-data-container div.main-data-container div.conditions {
+    margin-top: 0.5rem;
+    font-size: 2.25rem;
+    height: 2.25rem;
+  }
+  main.current div.weather-data-container div.main-data-container div.col2 {
+    align-self: flex-end;
+    margin: 0;
+    transform: translate(-100%);
+  }
+  main.current div.weather-data-container div.main-data-container div.col2 div.unit-toggle {
+    margin: 0;
+  }
+  main.current div.weather-data-container div.main-data-container div.col2 div.unit-toggle button {
+    font-size: 1.5rem;
+  }
+}
 body {
   width: 100vw;
   height: 100vh;
@@ -129,6 +253,7 @@ div.container {
   height: 100%;
   max-width: 1080px;
   overflow: hidden;
+  padding: 1rem 2rem;
   display: flex;
   flex-direction: column;
 }

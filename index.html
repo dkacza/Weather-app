@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <!-- Google ICons -->
+        <!-- Google Icons -->
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
@@ -18,7 +18,7 @@
     <body>
         <div class="container">
             <section class="search">
-                <div class="input-wrapper error">
+                <div class="input-wrapper">
                     <input type="text" placeholder="search" class="searchbar" />
                 </div>
                 <div class="buttons-container">
@@ -40,30 +40,42 @@
                 <div class="city-info">Pierściec, Poland</div>
                 <div class="weather-data-container">
                     <div class="main-data-container">
-                        <div class="temperature">11 °C</div>
-                        <div class="conditions">rain</div>
-                        <div class="unit-toggle">
-                            <button class="celcius-btn">°C</button>
-                            <div class="divider"></div>
-                            <button class="fahrenheit-btn">°F</button>
+                        <div class="col1">
+                            <div class="temperature">11 °C</div>
+                            <div class="conditions">rain</div>
+                        </div>
+                        <div class="col2">
+                            <div class="unit-toggle">
+                                <button class="celcius-btn active">°C</button>
+                                <div class="divider"></div>
+                                <button class="fahrenheit-btn">°F</button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="additional-data-container">
-                        <div class="rain-chance">
-                            <div class="icon rain">Rain chance</div>
-                            <div class="data rain">DATA RAIN</div>
+                        <div class="humidity">
+                            <div class="icon humidity">
+                                <span class="material-symbols-outlined">
+                                    humidity_low
+                                </span>
+                            </div>
+                            <div class="data humidity">95 %</div>
                         </div>
                         <div class="wind-speed">
-                            <div class="icon wind">Wind Speed</div>
-                            <div class="data wind">DATA WIND</div>
+                            <div class="icon wind">
+                                <span class="material-symbols-outlined">
+                                    air
+                                </span>
+                            </div>
+                            <div class="data wind">2.6 m/s</div>
                         </div>
                     </div>
                 </div>
             </main>
 
             <section class="forecast">
-                <div class="divisor">
+                <!-- <div class="divisor">
                     <div class="forecast-text">forecast</div>
                     <div class="dividing-line"></div>
                     <div class="toggle-forecast upper">
@@ -74,7 +86,7 @@
                 </div>
 
                 <div class="tiles">
-                    <!-- <div class="tile">
+                    <div class="tile">
                         <div class="hour">12:00</div>
                         <div class="weatherType">
                             <div class="background">
@@ -82,14 +94,14 @@
                             </div>
                         </div>
                         <div class="rain-chance">14%</div>
-                    </div> -->
+                    </div>
                 </div>
 
                 <div class="toggle-forecast lower">
                     <button class="hourly-btn">Hourly</button>
                     <div class="divider"></div>
                     <button class="daily-btn">Daily</button>
-                </div>
+                </div> -->
             </section>
         </div>
     </body>
