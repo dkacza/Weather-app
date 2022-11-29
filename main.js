@@ -123,6 +123,8 @@ const getCurrentWeather = async function (location) {
 };
 
 const dom = {
+    mainContainer: document.querySelector('div.container'),
+
     // Search section inputs.
     cityInput: document.querySelector('input.searchbar'),
     searchBtn: document.querySelector('button.search-btn'),
@@ -161,17 +163,20 @@ let curWeather;
 
 const handleGeo = async function() {
     try {
+        dom.mainContainer.classList.add('loading');
         const location = await getCurrentLocation();
         dom.updateLocation(location);
 
         curWeather = await getCurrentWeather(location);
         dom.updateWeather(curWeather);
+        dom.mainContainer.classList.remove('loading');
     } catch (err) {
         console.error(err);
     }
 }
 const handleQuerry = async function() {
     try {
+        dom.mainContainer.classList.add('loading');
         const locationQuerry = dom.cityInput.value;
         if (!locationQuerry) return;
         const location = await getLocationFromQuery(locationQuerry);
@@ -180,6 +185,7 @@ const handleQuerry = async function() {
         curWeather = await getCurrentWeather(location);
         dom.updateWeather(curWeather);
         dom.cityInput.value = '';
+        dom.mainContainer.classList.remove('loading');
     } catch (err) {
         console.error(err);
     }
@@ -196,4 +202,5 @@ dom.fahrenheit.addEventListener('click', () => {
     dom.updateWeather(curWeather);
 })
 
+dom.mainContainer.classList.add('loading');
 handleGeo();
