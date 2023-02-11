@@ -24,10 +24,10 @@ class WeatherData {
             celcius: Math.round(temp - 273.15),
             fahrenheit: Math.round((9 / 5) * (temp - 273.15) + 32),
         };
-        (this.humidity = hum),
-            (this.windSpeed = wind),
-            (this.pressure = pres),
-            (this.cloudsPercentage = clouds);
+        this.humidity = hum;
+        this.windSpeed = wind;
+        this.pressure = pres;
+        this.cloudsPercentage = clouds;
 
         this.time = time;
         this.hour = time.getHours();
@@ -101,10 +101,8 @@ const getCurrentWeather = async function (location) {
                 throw new Error(
                     `Getting current weather error - ${res.status}`
                 );
-            console.log('response arrived')
             return res.json();
         });
-
         const currentWeather = new WeatherData(
             response.weather[0].main,
             response.weather[0].description,
@@ -121,7 +119,58 @@ const getCurrentWeather = async function (location) {
         throw err;
     }
 };
+const getForecast = async function (location, type = 'hourly') {
+    try {
+        const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${API_KEY}`;
+        const response = await fetch(url).then(res => {
+            if (!res.ok)
+                throw new Error(`Getting forecast error - ${res.status}`);
+            return res.json();
+        });
 
+        forecastArray = [];
+        if (type === 'hourly') {
+            for (let i = 1; i < 6; i++) {
+                item = response.list[i];
+                const forecastEntry = new WeatherData(
+                    item.weather[0].main,
+                    item.weather[0].description,
+                    item.weather[0].id,
+                    item.weather[0].icon,
+                    item.main.temp,
+                    item.main.humidity,
+                    item.wind.speed,
+                    item.main.pressure,
+                    item.clouds.all,
+                    new Date(item.dt_txt)
+                );
+                forecastArray.push(forecastEntry);
+            }
+        }
+        if (type === 'daily') {
+            for (let i = 1; i < 6; i += 4) {
+                item = response.list[i];
+                const forecastEntry = new WeatherData(
+                    item.weather[0].main,
+                    item.weather[0].description,
+                    item.weather[0].id,
+                    item.weather[0].icon,
+                    item.main.temp,
+                    item.main.humidity,
+                    item.wind.speed,
+                    item.main.pressure,
+                    item.clouds.all,
+                    new Date(item.dt_txt)
+                );
+                forecastArray.push(forecastEntry);
+            }
+        }
+
+        return forecastArray;
+    } catch (err) {
+        throw err;
+    }
+};
 const dom = {
     // Main container and message display
     mainContainer: document.querySelector('div.container'),
@@ -163,16 +212,20 @@ const dom = {
 };
 
 let curWeather;
+let forecast;
 
-const handleGeo = async function() {
+const handleGeo = async function () {
     try {
         // Hide message and show the spinner
         dom.mainContainer.classList.add('loading');
-        dom.mainContainer.classList.remove('disp-msg')
+        dom.mainContainer.classList.remove('disp-msg');
 
         const location = await getCurrentLocation();
         dom.updateLocation(location);
         curWeather = await getCurrentWeather(location);
+        forecast = await getForecast(location);
+
+        console.log(forecast);
 
         // Display response and hide the spinner
         dom.updateWeather(curWeather);
@@ -184,16 +237,15 @@ const handleGeo = async function() {
         console.error(err);
 
         // Hide spinner and display geolocation message in the center of the sceen
-        dom.userMsg.textContent = 'Turn on the geolocation and then try again'
+        dom.userMsg.textContent = 'Turn on the geolocation and then try again';
         dom.mainContainer.classList.add('disp-msg');
         dom.mainContainer.classList.remove('loading');
     }
-}
-const handleQuerry = async function() {
+};
+const handleQuerry = async function () {
     try {
         // Hide message and show the spinner
         dom.mainContainer.classList.add('loading');
-        dom.mainContainer.classList.remove('disp-msg');
 
         const locationQuerry = dom.cityInput.value;
         if (!locationQuerry) {
@@ -206,12 +258,13 @@ const handleQuerry = async function() {
         dom.cityInputWrapper.classList.remove('error');
         dom.updateLocation(location);
         curWeather = await getCurrentWeather(location);
+        forecast = await getForecast(location);
         dom.updateWeather(curWeather);
 
         // Clear the searchbar and hide the spinner if everything goes fine
         dom.cityInput.value = '';
         dom.mainContainer.classList.remove('loading');
-        dom.mainContainer.classList.remove('disp-msg')
+        dom.mainContainer.classList.remove('disp-msg');
 
         initiialState = false;
     } catch (err) {
@@ -220,12 +273,12 @@ const handleQuerry = async function() {
 
         // Hide spinner and display error under the searchbar
         if (initiialState) {
-            dom.mainContainer.classList.add('disp-msg')
+            dom.mainContainer.classList.add('disp-msg');
         }
         dom.cityInputWrapper.classList.add('error');
         dom.mainContainer.classList.remove('loading');
     }
-}
+};
 
 // Toggling temperature
 dom.celcius.addEventListener('click', () => {
@@ -239,14 +292,14 @@ dom.fahrenheit.addEventListener('click', () => {
     dom.fahrenheit.classList.add('active');
     dom.celcius.classList.remove('active');
     dom.updateWeather(curWeather);
-})
+});
 
 // Handling main events
 dom.geolocateBtn.addEventListener('click', handleGeo);
 dom.searchBtn.addEventListener('click', handleQuerry);
-document.onkeydown = (e) => {
-    if(e.key === 'Enter' && dom.cityInput.matches(':focus')) handleQuerry();
-}
+document.onkeydown = e => {
+    if (e.key === 'Enter' && dom.cityInput.matches(':focus')) handleQuerry();
+};
 // Variable for a special first run of of handleQuerry with wrong city name
 // Without it, the program displays placeholder values instead of error messages
 let initiialState = true;
