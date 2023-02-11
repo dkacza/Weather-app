@@ -1,6 +1,7 @@
 @import 'var.scss';
 @import 'search.scss';
 @import 'current.scss';
+@import 'forecast.scss';
 
 body {
     width: 100vw;
@@ -51,6 +52,9 @@ div.container {
     }
     div.container {
         max-height: 670px;
+        section.forecast {
+            flex-basis: 220px;
+        }
     }
 }
 @media (min-width: 1200px) {
@@ -59,6 +63,7 @@ div.container {
     }
     div.container {
         box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25);
+        padding: 1rem 3rem;
     }
 }
 

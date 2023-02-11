@@ -38,9 +38,6 @@ section.search div.input-wrapper input.searchbar {
 section.search div.input-wrapper input.searchbar::-moz-placeholder {
   color: #92d8dc;
 }
-section.search div.input-wrapper input.searchbar:-ms-input-placeholder {
-  color: #92d8dc;
-}
 section.search div.input-wrapper input.searchbar::placeholder {
   color: #92d8dc;
 }
