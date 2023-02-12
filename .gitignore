@@ -1,5 +1,6 @@
 design/
 node_modules/
+icons/
 .prettierrc
 apiKey.txt
 todo.md

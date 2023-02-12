@@ -193,8 +193,8 @@ const dom = {
     humidity: document.querySelector('div.data.humidity'),
     wind: document.querySelector('div.data.wind'),
 
-    forecastTogglesH: document.querySelectorAll('button.hourly-btn'),
-    forecastTogglesD: document.querySelectorAll('button.daily-btn'),
+    forecastToggleH: document.querySelector('button.hourly-btn'),
+    forecastToggleD: document.querySelector('button.daily-btn'),
 
     celciusSelected: true,
 
@@ -209,10 +209,14 @@ const dom = {
         this.humidity.textContent = `${curWeather.humidity} %`;
         this.wind.textContent = `${curWeather.windSpeed} m/s`;
     },
+    updateForecast: function(type) {
+        
+    }
 };
 
 let curWeather;
 let forecast;
+let forecastType = 'hourly'
 
 const handleGeo = async function () {
     try {
@@ -294,6 +298,17 @@ dom.fahrenheit.addEventListener('click', () => {
     dom.updateWeather(curWeather);
 });
 
+dom.forecastToggleH.addEventListener('click', () => {
+    forecastType = 'hourly'
+    dom.forecastToggleH.classList.add('active')
+    dom.forecastToggleD.classList.remove('active');
+});
+dom.forecastToggleD.addEventListener('click', () => {
+    forecastType = 'daily'
+    dom.forecastToggleD.classList.add('active')
+    dom.forecastToggleH.classList.remove('active');
+});
+
 // Handling main events
 dom.geolocateBtn.addEventListener('click', handleGeo);
 dom.searchBtn.addEventListener('click', handleQuerry);
@@ -303,3 +318,4 @@ document.onkeydown = e => {
 // Variable for a special first run of of handleQuerry with wrong city name
 // Without it, the program displays placeholder values instead of error messages
 let initiialState = true;
+console.log(dom.forecastToggleD)
