@@ -129,14 +129,14 @@ dom.celcius.addEventListener('click', () => {
     dom.celcius.classList.add('active');
     dom.fahrenheit.classList.remove('active');
     dom.updateWeather(curWeather);
-    dom.updateForecast(forecast, forecastType);
+    dom.updateForecastData(forecast);
 });
 dom.fahrenheit.addEventListener('click', () => {
     dom.celciusSelected = false;
     dom.fahrenheit.classList.add('active');
     dom.celcius.classList.remove('active');
     dom.updateWeather(curWeather);
-    dom.updateForecast(forecast, forecastType);
+    dom.updateForecastData(forecast);
 });
 
 // Toggling forecast type

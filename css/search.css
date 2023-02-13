@@ -16,6 +16,10 @@ html {
   color: #f0f0f0;
 }
 
+.hidden {
+  display: none !important;
+}
+
 section.search {
   display: flex;
   flex-direction: row;

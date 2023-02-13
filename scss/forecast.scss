@@ -36,6 +36,9 @@ section.forecast {
                         color: $secondary1;
                     }
                 }
+                &:hover {
+                    cursor: pointer;
+                }
             }
             div.divider {
                 height: 100%;
@@ -51,12 +54,11 @@ section.forecast {
         }
     }
 
-    // TU POPRAWIĆ
     div.tiles > div {
         margin-top: 0.5rem;
         display: flex;
         flex-direction: row;
-       
+
         div.tile {
             width: 3rem;
             margin-right: 0.5rem;
@@ -107,8 +109,4 @@ section.forecast {
             }
         }
     }
-}
-
-.hidden {
-    display: none !important;
 }

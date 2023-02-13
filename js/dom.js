@@ -70,17 +70,16 @@ export const dom = {
             const currHourlyForecast = forecast[i];
             const currDailyForecast = forecast[i * 8];
 
-            console.log(currHourlyForecast);
-
-
             currDailyTile.querySelector('.date.full').textContent =
                 weekdayMap.get(currDailyForecast.time.getDay())
             currDailyTile.querySelector('.date.short').textContent = 
             weekdayMapShort.get(currDailyForecast.time.getDay())
+            currDailyTile.querySelector('i').removeAttribute('class');
             currDailyTile.querySelector('i').classList.add('wi', `wi-owm-${currDailyForecast.weatherId}`)
             currDailyTile.querySelector('.temperature').textContent = `${this.celciusSelected ? currDailyForecast.temp.celcius : currDailyForecast.temp.fahrenheit}${this.celciusSelected ? '°C' : '°F'}`;
 
             currHourlyTile.querySelector('.date').textContent = currHourlyForecast.time.getHours() + ":00";
+            currHourlyTile.querySelector('i').removeAttribute('class');
             currHourlyTile.querySelector('i').classList.add('wi', `wi-owm-${currHourlyForecast.weatherId}`);
             currHourlyTile.querySelector('.temperature').textContent = `${this.celciusSelected ? currHourlyForecast.temp.celcius : currHourlyForecast.temp.fahrenheit}${this.celciusSelected ? '°C' : '°F'}`;
 

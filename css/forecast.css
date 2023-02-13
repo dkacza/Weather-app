@@ -16,6 +16,10 @@ html {
   color: #f0f0f0;
 }
 
+.hidden {
+  display: none !important;
+}
+
 section.forecast {
   max-width: 900px;
 }
@@ -50,6 +54,9 @@ section.forecast div.divisor div.toggle-forecast button span {
 }
 section.forecast div.divisor div.toggle-forecast button.active span {
   color: #f0f0f0;
+}
+section.forecast div.divisor div.toggle-forecast button:hover {
+  cursor: pointer;
 }
 section.forecast div.divisor div.toggle-forecast div.divider {
   height: 100%;
@@ -110,7 +117,4 @@ section.forecast div.tiles > div div.tile div.weatherType i {
   section.forecast div.tiles > div div.tile div.weatherType i {
     font-size: 2.25rem;
   }
-}
-.hidden {
-  display: none !important;
 }
