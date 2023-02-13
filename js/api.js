@@ -1,9 +1,9 @@
+import {WeatherData, Location} from './main.js';
+
 const API_KEY = 'b48fc9a3f6a6deaf3d65d0d6620f1a13';
+const DEFAULT_TIMEZONE = 3600;
 
-import { WeatherData, Location } from "./main.js";
-import {dom} from "./dom.js"
-
-export const geolocation = function () {
+const geolocation = function () {
     return new Promise((res, rej) => {
         navigator.geolocation.getCurrentPosition(res, rej);
     });
@@ -64,6 +64,9 @@ export const getCurrentWeather = async function (location) {
                 );
             return res.json();
         });
+        const dateOnPlace = new Date();
+        dateOnPlace.setSeconds(dateOnPlace.getSeconds() + response.timezone - DEFAULT_TIMEZONE);
+        
         const currentWeather = new WeatherData(
             response.weather[0].main,
             response.weather[0].description,
@@ -73,14 +76,15 @@ export const getCurrentWeather = async function (location) {
             response.main.humidity,
             response.wind.speed,
             response.main.pressure,
-            response.clouds.all
+            response.clouds.all,
+            dateOnPlace,
         );
         return currentWeather;
     } catch (err) {
         throw err;
     }
 };
-export const getForecast = async function (location, type = 'hourly') {
+export const getForecast = async function (location, type) {
     try {
         const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${API_KEY}`;
         const response = await fetch(url).then(res => {
@@ -88,45 +92,42 @@ export const getForecast = async function (location, type = 'hourly') {
                 throw new Error(`Getting forecast error - ${res.status}`);
             return res.json();
         });
+        const timezoneShift = response.city.timezone
 
         let forecastArray = [];
-        if (type === 'hourly') {
-            for (let i = 1; i < 6; i++) {
-                let item = response.list[i];
-                const forecastEntry = new WeatherData(
-                    item.weather[0].main,
-                    item.weather[0].description,
-                    item.weather[0].id,
-                    item.weather[0].icon,
-                    item.main.temp,
-                    item.main.humidity,
-                    item.wind.speed,
-                    item.main.pressure,
-                    item.clouds.all,
-                    new Date(item.dt_txt)
-                );
-                forecastArray.push(forecastEntry);
-            }
+        let startingValue, endCondition, step;
+        if (type == 'hourly') {
+            startingValue = 1;
+            endCondition = 5;
+            step = 1
+        } else {
+            startingValue = 0;
+            endCondition = 39
+            step = 8;
         }
-        if (type === 'daily') {
-            for (let i = 1; i < 6; i += 4) {
-                item = response.list[i];
-                const forecastEntry = new WeatherData(
-                    item.weather[0].main,
-                    item.weather[0].description,
-                    item.weather[0].id,
-                    item.weather[0].icon,
-                    item.main.temp,
-                    item.main.humidity,
-                    item.wind.speed,
-                    item.main.pressure,
-                    item.clouds.all,
-                    new Date(item.dt_txt)
-                );
-                forecastArray.push(forecastEntry);
-            }
-        }
+        let i = startingValue
 
+        while(true) {
+            let item = response.list[i];
+            const dateOfForecast = new Date(item.dt_txt)
+            dateOfForecast.setSeconds(dateOfForecast.getSeconds() + timezoneShift - DEFAULT_TIMEZONE);
+            const forecastEntry = new WeatherData(
+                item.weather[0].main,
+                item.weather[0].description,
+                item.weather[0].id,
+                item.weather[0].icon,
+                item.main.temp,
+                item.main.humidity,
+                item.wind.speed,
+                item.main.pressure,
+                item.clouds.all,
+                dateOfForecast
+            );
+            forecastArray.push(forecastEntry);
+            i += step;
+            if (i > endCondition) break;
+            
+        }
         return forecastArray;
     } catch (err) {
         throw err;

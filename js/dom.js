@@ -38,7 +38,23 @@ export const dom = {
         this.humidity.textContent = `${curWeather.humidity} %`;
         this.wind.textContent = `${curWeather.windSpeed} m/s`;
     },
-    updateForecast: function(type) {
-        console.log(dom.forecastTiles)
-    }
+
+    updateForecast: function(forecast, forecastType) {
+        for (let i = 0; i < 5; i++) {
+            const forecastEntry = forecast[i];
+            const domTileEntry = this.forecastTiles[i];
+
+            const weekdayMap = new Map();
+            weekdayMap.set(0, 'Monday').set(1, 'Tuesday').set(2, 'Wednesday').set(3, 'Thursday').set(4, 'Friday').set(5, 'Saturday').set(6, 'Sunday');
+
+            const id = forecastEntry.weatherId;
+            const date = (forecastType === 'hourly' ? `${forecastEntry.time.getHours()}:00` : weekdayMap.get(forecastEntry.time.getDay()));
+            const temperature = (this.celciusSelected ? forecastEntry.temp.celcius : forecastEntry.temp.fahrenheit)
+
+            domTileEntry.querySelector('.date').textContent = date;
+            domTileEntry.querySelector('i').removeAttribute('class');
+            domTileEntry.querySelector('i').classList.add('wi', `wi-owm-${id}`)
+            domTileEntry.querySelector('.temperature').textContent = `${temperature}${this.celciusSelected ? '°C' : '°F'}`;
+        }
+    },
 };
