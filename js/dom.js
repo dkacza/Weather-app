@@ -1,3 +1,22 @@
+const weekdayMap = new Map();
+weekdayMap
+    .set(0, 'Monday')
+    .set(1, 'Tuesday')
+    .set(2, 'Wednesday')
+    .set(3, 'Thursday')
+    .set(4, 'Friday')
+    .set(5, 'Saturday')
+    .set(6, 'Sunday');
+const weekdayMapShort = new Map();
+weekdayMapShort
+    .set(0, 'Mon')
+    .set(1, 'Tue')
+    .set(2, 'Wed')
+    .set(3, 'Thu')
+    .set(4, 'Fri')
+    .set(5, 'Sat')
+    .set(6, 'Sun');
+
 export const dom = {
     // Main container and message display
     mainContainer: document.querySelector('div.container'),
@@ -23,7 +42,11 @@ export const dom = {
     forecastToggleH: document.querySelector('button.hourly-btn'),
     forecastToggleD: document.querySelector('button.daily-btn'),
 
-    forecastTiles: document.querySelectorAll('div.tile'),
+    forecastTilesHourly: document.querySelectorAll('div.hourly div.tile'),
+    forecastTilesDaily: document.querySelectorAll('div.daily div.tile'),
+
+    hourlyTilesContainer: document.querySelector('div.hourly'),
+    dailyTilesContainer: document.querySelector('div.daily'),
 
     celciusSelected: true,
 
@@ -39,22 +62,37 @@ export const dom = {
         this.wind.textContent = `${curWeather.windSpeed} m/s`;
     },
 
-    updateForecast: function(forecast, forecastType) {
+    updateForecastData: function (forecast) {
         for (let i = 0; i < 5; i++) {
-            const forecastEntry = forecast[i];
-            const domTileEntry = this.forecastTiles[i];
+            const currDailyTile = this.forecastTilesDaily[i];
+            const currHourlyTile = this.forecastTilesHourly[i];
 
-            const weekdayMap = new Map();
-            weekdayMap.set(0, 'Monday').set(1, 'Tuesday').set(2, 'Wednesday').set(3, 'Thursday').set(4, 'Friday').set(5, 'Saturday').set(6, 'Sunday');
+            const currHourlyForecast = forecast[i];
+            const currDailyForecast = forecast[i * 8];
 
-            const id = forecastEntry.weatherId;
-            const date = (forecastType === 'hourly' ? `${forecastEntry.time.getHours()}:00` : weekdayMap.get(forecastEntry.time.getDay()));
-            const temperature = (this.celciusSelected ? forecastEntry.temp.celcius : forecastEntry.temp.fahrenheit)
+            console.log(currHourlyForecast);
 
-            domTileEntry.querySelector('.date').textContent = date;
-            domTileEntry.querySelector('i').removeAttribute('class');
-            domTileEntry.querySelector('i').classList.add('wi', `wi-owm-${id}`)
-            domTileEntry.querySelector('.temperature').textContent = `${temperature}${this.celciusSelected ? '°C' : '°F'}`;
+
+            currDailyTile.querySelector('.date.full').textContent =
+                weekdayMap.get(currDailyForecast.time.getDay())
+            currDailyTile.querySelector('.date.short').textContent = 
+            weekdayMapShort.get(currDailyForecast.time.getDay())
+            currDailyTile.querySelector('i').classList.add('wi', `wi-owm-${currDailyForecast.weatherId}`)
+            currDailyTile.querySelector('.temperature').textContent = `${this.celciusSelected ? currDailyForecast.temp.celcius : currDailyForecast.temp.fahrenheit}${this.celciusSelected ? '°C' : '°F'}`;
+
+            currHourlyTile.querySelector('.date').textContent = currHourlyForecast.time.getHours() + ":00";
+            currHourlyTile.querySelector('i').classList.add('wi', `wi-owm-${currHourlyForecast.weatherId}`);
+            currHourlyTile.querySelector('.temperature').textContent = `${this.celciusSelected ? currHourlyForecast.temp.celcius : currHourlyForecast.temp.fahrenheit}${this.celciusSelected ? '°C' : '°F'}`;
+
+        }
+    },
+    updateForecastDisplay(forecastType) {
+        if(forecastType == 'daily') {
+            this.hourlyTilesContainer.classList.add('hidden');
+            this.dailyTilesContainer.classList.remove('hidden');
+        } else {
+            this.hourlyTilesContainer.classList.remove('hidden');
+            this.dailyTilesContainer.classList.add('hidden');
         }
     },
 };

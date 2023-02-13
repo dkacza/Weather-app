@@ -36,9 +36,6 @@ section.forecast {
                         color: $secondary1;
                     }
                 }
-                &:hover {
-                    cursor: pointer;
-                }
             }
             div.divider {
                 height: 100%;
@@ -53,7 +50,9 @@ section.forecast {
             background-color: $secondary1;
         }
     }
-    div.tiles {
+
+    // TU POPRAWIĆ
+    div.tiles > div {
         margin-top: 0.5rem;
         display: flex;
         flex-direction: row;
@@ -61,6 +60,10 @@ section.forecast {
         div.tile {
             width: 3rem;
             margin-right: 0.5rem;
+
+            div.full {
+                display: none;
+            }
             div.weatherType {
                 margin: 0.4rem 0;
                 width: 2.8rem;
@@ -81,11 +84,18 @@ section.forecast {
 }
 @media (min-width: 1200px) {
     section.forecast {
-        div.tiles {
+        div.tiles > div {
             margin-top: 1.25rem;
             div.tile {
                 width: 3.5rem;
                 margin-right: 3rem;
+
+                div.full {
+                    display: block;
+                }
+                div.short {
+                    display: none;
+                }
                 div.weatherType {
                     width: 4rem;
                     height: 4rem;
@@ -99,3 +109,6 @@ section.forecast {
     }
 }
 
+.hidden {
+    display: none !important;
+}

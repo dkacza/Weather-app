@@ -63,12 +63,12 @@ const handleGeo = async function () {
         // Get data from API
         location = await getCurrentLocation();
         curWeather = await getCurrentWeather(location);
-        forecast = await getForecast(location, forecastType);
+        forecast = await getForecast(location);
 
         // Update DOM
         dom.updateLocation(location);
         dom.updateWeather(curWeather);
-        dom.updateForecast(forecast, forecastType);
+        dom.updateForecastData(forecast);
 
         // Remove spinners and error messages
         dom.mainContainer.classList.remove('loading');
@@ -98,12 +98,12 @@ const handleQuerry = async function () {
         // Get data from API
         location = await getLocationFromQuery(locationQuerry);
         curWeather = await getCurrentWeather(location);
-        forecast = await getForecast(location, forecastType);
+        forecast = await getForecast(location);
 
         // Update DOM
         dom.updateLocation(location);
         dom.updateWeather(curWeather);
-        dom.updateForecast(forecast, forecastType);
+        dom.updateForecastData(forecast);
 
         // Clear the searchbar and hide the spinner if everything goes fine
         dom.cityInput.value = '';
@@ -142,16 +142,14 @@ dom.fahrenheit.addEventListener('click', () => {
 // Toggling forecast type
 dom.forecastToggleH.addEventListener('click', async function () {
     forecastType = 'hourly';
-    forecast = await getForecast(location, forecastType);
-    dom.updateForecast(forecast, forecastType);
+    dom.updateForecastDisplay(forecastType);
 
     dom.forecastToggleH.classList.add('active');
     dom.forecastToggleD.classList.remove('active');
 });
 dom.forecastToggleD.addEventListener('click', async function () {
     forecastType = 'daily';
-    forecast = await getForecast(location, forecastType);
-    dom.updateForecast(forecast, forecastType);
+    dom.updateForecastDisplay(forecastType);
 
     dom.forecastToggleD.classList.add('active');
     dom.forecastToggleH.classList.remove('active');

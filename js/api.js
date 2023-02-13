@@ -84,7 +84,7 @@ export const getCurrentWeather = async function (location) {
         throw err;
     }
 };
-export const getForecast = async function (location, type) {
+export const getForecast = async function (location) {
     try {
         const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${API_KEY}`;
         const response = await fetch(url).then(res => {
@@ -95,20 +95,7 @@ export const getForecast = async function (location, type) {
         const timezoneShift = response.city.timezone
 
         let forecastArray = [];
-        let startingValue, endCondition, step;
-        if (type == 'hourly') {
-            startingValue = 1;
-            endCondition = 5;
-            step = 1
-        } else {
-            startingValue = 0;
-            endCondition = 39
-            step = 8;
-        }
-        let i = startingValue
-
-        while(true) {
-            let item = response.list[i];
+        for (const item of response.list) {
             const dateOfForecast = new Date(item.dt_txt)
             dateOfForecast.setSeconds(dateOfForecast.getSeconds() + timezoneShift - DEFAULT_TIMEZONE);
             const forecastEntry = new WeatherData(
@@ -124,9 +111,6 @@ export const getForecast = async function (location, type) {
                 dateOfForecast
             );
             forecastArray.push(forecastEntry);
-            i += step;
-            if (i > endCondition) break;
-            
         }
         return forecastArray;
     } catch (err) {
