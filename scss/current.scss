@@ -38,6 +38,9 @@ main.current {
                         font-weight: bold;
                         color: $secondary1;
                     }
+                    &:hover {
+                        cursor: pointer;
+                    }
                 }
                 div.divider {
                     width: 2px;
@@ -112,7 +115,7 @@ main.current {
             div.temperature {
                 font-size: 6rem;
                 height: 6rem;
-                width: 16rem
+                width: 16.25rem
             }
             div.conditions {
                 margin-top: 0.5rem;
