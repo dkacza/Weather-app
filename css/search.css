@@ -71,6 +71,9 @@ section.search div.buttons-container button:hover {
 section.search div.buttons-container button:hover span {
   color: #6cb1b4;
 }
+section.search div.buttons-container button:hover {
+  cursor: pointer;
+}
 section.search div.buttons-container div.divider {
   width: 3px;
   height: 2.5rem;

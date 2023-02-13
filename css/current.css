@@ -52,6 +52,9 @@ main.current div.weather-data-container div.main-data-container div.unit-toggle 
   font-weight: bold;
   color: #f0f0f0;
 }
+main.current div.weather-data-container div.main-data-container div.unit-toggle button:hover {
+  cursor: pointer;
+}
 main.current div.weather-data-container div.main-data-container div.unit-toggle div.divider {
   width: 2px;
   height: 1.25rem;
@@ -106,7 +109,7 @@ main.current div.weather-data-container div.additional-data-container div span {
   main.current div.weather-data-container div.main-data-container div.temperature {
     font-size: 6rem;
     height: 6rem;
-    width: 16rem;
+    width: 16.25rem;
   }
   main.current div.weather-data-container div.main-data-container div.conditions {
     margin-top: 0.5rem;
