@@ -10,4 +10,4 @@ https://erikflowers.github.io/weather-icons/
 ![mobile screenshot](./img/screenshot2.png "Mobile")
 
 ### How to run it?
-Run the `npm init` and `npm run start` commands in the project directory to check it out.
+Run the `npm install` and `npm run start` commands in the project directory to check it out.
